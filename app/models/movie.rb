@@ -13,4 +13,5 @@
 #  director_id :integer
 #
 class Movie < ApplicationRecord
+  has_many(:bookmarks, { :class_name => "Bookmark", :foreign_key => "movie_id" })
 end

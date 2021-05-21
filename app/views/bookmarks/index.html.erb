@@ -1,7 +1,7 @@
 <div>
   <div>
     <h1>
-      List of all bookmarks
+      <%= @current_user.first_name%> <%= @current_user.last_name%>'s bookmarks
     </h1>
   </div>
 </div>
@@ -10,31 +10,23 @@
 
 <div>
   <div>
-    <h2>
-      Add a new bookmark
-    </h2>
 
-    <form action="/insert_bookmark" method="post">
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
+<form action="/insert_bookmark" method="post">
 
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
+  <select name="query_movie_id" id="movie_id_box">
 
-      <div>
-        <label for="movie_id_box">
-          Movie
-        </label>
+  <% Movie.all.each do |movie| %>
+      <option value="<%= movie.id %>">
+        <%= movie.title %>
+      </option>
+  <% end %>
 
-        <input type="text" id="movie_id_box" name="query_movie_id">
-      </div>
+ &quot;Terminator 2: Judgment Day&quot;, year: 1991, duration: 137, description: &quot;Nearly 10 years have passed since Sarah Connor was...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/5M0j0B18abtBI5gi2R...&quot;, director_id: 2710, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 38, title: &quot;American History X&quot;, year: 1998, duration: 119, description: &quot;Derek Vineyard is paroled after serving 3 years in...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/c2gsmSQ2Cqv8zosqKO...&quot;, director_id: 814, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 39, title: &quot;Modern Times&quot;, year: 1936, duration: 87, description: &quot;The Tramp struggles to live in modern industrial s...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/7uoiKOEjxBBW0AgDGQ...&quot;, director_id: 13848, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 40, title: &quot;Psycho&quot;, year: 1960, duration: 109, description: &quot;When larcenous real estate clerk Marion Crane goes...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/nR4LD4ZJg2n6LZQpcO...&quot;, director_id: 2636, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 41, title: &quot;Gladiator&quot;, year: 2000, duration: 155, description: &quot;In the year 180, the death of emperor Marcus Aurel...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/ofDw0himYNpehWA69O...&quot;, director_id: 578, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 42, title: &quot;City Lights&quot;, year: 1931, duration: 87, description: &quot;In this sound-era silent film, a tramp falls in lo...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/bXNvzjULc9jrOVhGfj...&quot;, director_id: 13848, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 43, title: &quot;The Departed&quot;, year: 2006, duration: 151, description: &quot;To take down South Boston&#39;s Irish Mafia, the polic...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/jyAgiqVSx5fl0NNj7W...&quot;, director_id: 1032, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 44, title: &quot;The Intouchables&quot;, year: 2011, duration: 113, description: &quot;A true story of two men who should never have met ...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/w7WxNbb0mcWpwDMd3p...&quot;, director_id: 84425, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;, #&lt;Movie id: 45, title: &quot;Whiplash&quot;, year: 2014, duration: 107, description: &quot;Under the direction of a ruthless instructor, a ta...&quot;, image: &quot;https://image.tmdb.org/t/p/w500/6uSPcdGNA2A6vJmCag...&quot;, director_id: 136495, created_at: &quot;2015-08-12 17:20:11&quot;, updated_at: &quot;2015-08-12 17:20:11&quot;&gt;]  </select>
 
-      <button>
-        Create bookmark
-      </button>
-    </form>
+  <button>
+    Bookmark this movie!
+  </button>
+
   </div>
 </div>
 
@@ -44,14 +36,6 @@
     <table>
       <tr>
         <th>
-          ID
-        </th>
-
-        <th>
-          User
-        </th>
-
-        <th>
           Movie
         </th>
 
@@ -60,37 +44,28 @@
         </th>
 
         <th>
-          Updated at
+          
         </th>
 
         <th>
         </th>
       </tr>
 
-      <% @list_of_bookmarks.each do |a_bookmark| %>
+      <% @current_user.bookmarks.each do |a_bookmark| %>
       <tr>
         <td>
-          <%= a_bookmark.id %>
-        </td>
-
-        <td>
-          <%= a_bookmark.user_id %>
-        </td>
-
-        <td>
-          <%= a_bookmark.movie_id %>
+        <a href="/movies/<%= a_bookmark.movie.id %>">
+          <%= a_bookmark.movie.title %>
+        </a>
         </td>
 
         <td>
           <%= time_ago_in_words(a_bookmark.created_at) %> ago
         </td>
-        <td>
-          <%= time_ago_in_words(a_bookmark.updated_at) %> ago
-        </td>
 
         <td>
-          <a href="/bookmarks/<%= a_bookmark.id %>">
-            Show details
+          <a href="/delete_bookmark/<%= a_bookmark.id %>">
+            Un-bookmark
           </a>
         </td>
       </tr>
