@@ -15,6 +15,43 @@
   </head>
 
   <body>
+      <nav>
+      <ul>
+          <li>
+          <% if @current_user %>
+            <a href="/user_sign_out">
+              Sign out
+            </a>
+          </li>
+          <li>
+            <a href="/bookmarks">
+              My bookmarks
+            </a>
+          </li>
+        <li>
+          <a href="/">
+            Home
+          </a>
+        </li>
+        <% else %>
+            <a href="/user_sign_in">
+              Sign in
+            </a>
+          </li>
+          <li>
+            <a href="/user_sign_up">
+              Sign up
+            </a>
+          </li>
+        <li>
+          <a href="/">
+            Home
+          </a>
+        </li>
+        <% end %>
+
+      </ul>
+    </nav>
     <%= yield %>
   </body>
 </html>
